@@ -41,5 +41,19 @@ def add_post():
     c.close()
     return render_template("add.html")
 
+@app.route("/list")
+def list_get():
+    con=sqlite3.connect("myTask.db")
+    # 3.データベースを操作するための準備
+    c=con.cursor()
+    # 4.SQLを実行してDBにデータを送る
+    c.execute("SELECT task FROM tasks WHERE id=4;")
+    task=c.fetchone()
+    # 5.データベースを更新（保存）する
+    con.commit()
+    # 6.データベースの接続を終了する
+    c.close()
+    return render_template("list.html",task=task)
+
 if __name__=="__main__":
     app.run(debug=True)
